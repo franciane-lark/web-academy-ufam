@@ -14,7 +14,7 @@
         <br>
         Alguns dos recursos da linguagem HTML vistos até este momento:
     </p>
-    <table>
+    <table border="1">
         <thead>
             <tr>
             <th>Recursos</th>
@@ -25,17 +25,23 @@
         <tbody>
             <tr>
                 <td>Links</td>
-                <td><code>< a ></code></td>
+                <td><code>&lt;a&gt;</code></td>
                 <td>Criar links entre páginas</td>
             </tr>
-             <tr>
-                <td>Listas</td>
-                <td><th rowspan="2">teste</td></td>
-                <td></td>
+            <!-- rowspan="2" faz a célula “Listas” ocupar duas linhas -->
+            <tr>
+                <td rowspan="2">Listas</td>
+                <td><code>&lt;ul&gt;</code> e <code>&lt;li&gt;</code></td>
+                <td>Criar listas de itens ordenados</td>
             </tr>
+            <tr>
+                <td><code>&lt;ol&gt;</code> e <code>&lt;li&gt;</code></td>
+                <td>Criar listas de itens não ordenados</td>
+            </tr>
+            <!-- Na segunda <tr>, você não repete essa célula, porque ela já está ocupando o espaço -->
              <tr>
                 <td>Imagens</td>
-                <td><code>< img ></code></td>
+                <td><code>&lt;img&gt;</code></td>
                 <td>Inserir Imagens</td>
             </tr>
         </tbody>
