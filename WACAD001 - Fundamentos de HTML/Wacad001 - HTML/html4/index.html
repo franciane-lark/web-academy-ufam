@@ -54,30 +54,45 @@
         <br>
         <fieldset>
             <legend>Dados Complementares</legend>
-            Cor favorita <input type="color" name="cor"><br>
+            <label for="cor">Cor favorita</label>
+            <input type="color" name="cor"><br>
 
-            Data de nascimento <input type="date" name="data"><br>
+            <label for="data">Data de nascimento</label>
+            <input type="date" name="data"><br>
 
-            Ano de entrada em seu curso do IComp <input type="number" name="ano" value="2000"><br>
+            <label for="ano">Ano de entrada em seu curso do IComp</label>
+            <input type="number" name="ano" value="2000"><br>
             
-            Nota para este site:
+            <label for="nota">Nota para este site:</label>
             <input type="range" name="nota" min="0" max="10">
         </fieldset>
         
         <br>
         <fieldset>
             <legend>Área de atuação</legend>
+            <select name="area" id="area">
+                <option value="1">Banco de Dados</option>
+                <option value="2">Desenvolvimento Web </option>
+                <option value="3">Inteligência Artificial</option>
+            </select>
         </fieldset>
         
         <br>
         <fieldset>
             <legend>Submeta seu currículo vitae</legend>
+
+            <input type="file" name="curriculo" value="">
         </fieldset>
 
         <br>
         <fieldset>
             <legend>Digite sua mensagem</legend>
-        </fieldset>
+
+            <textarea name="mensagem" id="mensagem" rows="5" col="40"> Este é o valor padrão!</textarea>
+        </fieldset><br>
+
+        <button type="submit">Resetar Dados</button>
+        <button type="submit">Enviar mensagem</button>
     </form>
 </body>
 </html>
