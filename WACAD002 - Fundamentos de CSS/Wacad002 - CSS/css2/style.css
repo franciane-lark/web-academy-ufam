@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    background-image: url(jameswebb.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+.container {
+    margin-top: 60px;
+    margin-left: 60px;
+    text-align: center;
+}
+
+.card {   
+    width: 220px;    
+    padding: 30px 20px;    
+    background: rgba(0, 0, 0, 0.7);    
+    border: 10px solid #c57c2d;    
+    border-radius: 20px;    
+    color: white;
+    overflow: hidden;
+    min-height: 560px;
+    line-height: 1.8;
+}
+    
+.card h1 { 
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.card p {  
+    font-size: 20px;    
+    line-height: 1.6;
+}
+
