@@ -5,29 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introdução ao Css</title>
     <style>
-       div.blue { 
+    body {
+        position: relative;
+        width: 300px;
+        height: 200px;
+    }
+
+    div {
+        position: absolute;
+    }
+
+    .blue { 
         width:100px; 
-        height:100px;
+        height: 300px;
         background-color:blue;
-        }
-        
-        div.yellow { 
-        width:100px; 
-        height:100px;
+        top: 0;
+        left: 0;
+    }
+
+    .yellow { 
+        width:100px;
+        height: 200px; 
         background-color:yellow; 
-        }
+        top: 0;
+        left: 100px;
+    }
 
-        div.red { 
+    .red { 
         width:100px; 
-        height:100px;
+        height: 200px;
         background-color:red; 
-        }
+        top: 0;
+        left: 200px;
+    }
 
-        div.green { 
-        width:200px; 
-        height:100px;
+    .green { 
+        margin-top: 100px;
+        margin-left: 100px;
+        
+        width: 200px; 
+        height: 100px;
         background-color:green; 
-        }
+        top: 100px;
+        left: 0;
+    }
     </style>
 </head>
 <body>
