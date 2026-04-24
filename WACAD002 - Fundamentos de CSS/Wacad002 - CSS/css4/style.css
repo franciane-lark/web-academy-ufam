@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #eee;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+h2 {
+    margin: 20px 0 10px;
+}
+
+/* Estilo geral dos blocos */
+.box {
+    border-radius: 10px;
+}
+
+/* Cores */
+.red { background: #b30000; }
+.blue { background: #0a0a8f; }
+.green { background: #006400; }
+.purple { background: #8a0a8a; }
+.orange { background: #ff8c00; }
+
+/* ===== Layout 1 ===== */
+.grid1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100px 100px 100px;
+    gap: 15px;
+    background: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* posicionamento */
+.grid1 .red {
+    grid-column: 1 / 2;
+}
+
+.grid1 .blue {
+    grid-column: 2 / 3;
+}
+
+.grid1 .green {
+    grid-column: 1 / 2;
+}
+
+.grid1 .purple {
+    grid-column: 2 / 3;
+}
+
+.grid1 .orange {
+    grid-column: 1 / 3; /* ocupa toda largura */
+}
+
+
+/* ===== Layout 2 ===== */
+.grid2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 100px 150px 100px;
+    gap: 15px;
+    background: #ddd;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* posicionamento */
+.grid2 .red {
+    grid-column: 1 / 4; /* topo inteiro */
+}
+
+.grid2 .green {
+    grid-row: 2 / 4; /* ocupa duas linhas */
+    grid-column: 1 / 2;
+}
+
+.grid2 .purple {
+    grid-column: 2 / 4;
+}
+
+.grid2 .blue {
+    grid-column: 2 / 3;
+}
+
+.grid2 .orange {
+    grid-column: 3 / 4;
+}
