@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerador de Histórias Aleatórias</title>
+    <style>
+        body { font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 50px; }
+        #historia { margin-top: 20px; font-style: italic; font-size: 1.2rem; color: #333; text-align: center; max-width: 600px; }
+        button { padding: 10px 20px; cursor: pointer; background-color: #007bff; color: white; border: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+
+    <h1>Era uma vez...</h1>
+    <button onclick="gerarHistoria()">Gerar Nova História</button>
+    <p id="historia">Clique no botão para criar uma aventura!</p>
+
+    <script>
+        function gerarHistoria() {
+            // "Baldes" de opções
+            const personagens = ["Um astronauta perdido", "Um gato mestre de kung fu", "Uma inteligência artificial rebelde", "Um cavaleiro medroso", "Um programador cansado"];
+            const acoes = ["descobriu um portal secreto", "venceu um campeonato de xadrez", "derramou café no servidor central", "encontrou um mapa de tesouro", "aprendeu a falar com plantas"];
+            const lugares = ["em Marte", "dentro de uma padaria", "no fundo do oceano", "em uma biblioteca mágica", "na nuvem da AWS"];
+            const reviravoltas = ["mas tudo era um sonho.", "e isso mudou o mundo para sempre.", "embora ninguém tenha acreditado.", "por causa de um biscoito da sorte.", "e logo depois tirou uma soneca."];
+
+            // Função para escolher um item aleatório
+            const sortear = (lista) => lista[Math.floor(Math.random() * lista.length)];
+
+            // Montando a frase
+            const fraseFinal = `${sortear(personagens)} ${sortear(acoes)} ${sortear(lugares)}, ${sortear(reviravoltas)}`;
+
+            // Exibindo na tela
+            document.getElementById("historia").innerText = fraseFinal;
+        }
+    </script>
+</body>
+</html>
