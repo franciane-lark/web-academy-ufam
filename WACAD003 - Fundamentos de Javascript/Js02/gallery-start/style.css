@@ -1,0 +1,86 @@
+h1 {
+  font-family: helvetica, arial, sans-serif;
+  text-align: center;
+}
+
+body {
+  width: 640px;
+  margin: 0 auto;
+  background-color: rgb(214, 214, 240);
+}
+
+button {
+  border: 0;
+  background: rgba(150,150,150,0.6);
+  text-shadow: 1px 1px 1px white;
+  border: 1px solid #999;
+  position: absolute;
+  cursor: pointer;
+  top: 2px;
+  left: 2px;
+}
+
+.next-btn {
+  margin-top: 280px;
+  margin-left: 200px;
+}
+
+/* Container da imagem principal */
+.full-img {
+  position: relative;
+  display: flex; /* Mudamos para flex para alinhar imagem e texto */
+  flex-direction: column; 
+  align-items: center;
+  width: 640px; /* Largura do seu container original */
+  margin: 0 auto;
+}
+
+/* A imagem principal com tamanho fixo */
+.displayed-img {
+  width: 400px;
+  height: 200px;
+  object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+  object-fit: cover;
+  display: block;
+}
+
+/* Estilo para o texto embaixo da imagem */
+.image-text {
+  width: 400px; /* Mesma largura da imagem */
+  text-align: center;
+  margin-top: 15px;
+
+  font-family: sans-serif;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+/* Ajuste das miniaturas para não quebrarem o layout */
+.thumb-bar {
+  clear: both;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.thumb-bar img {
+  width: 100px; /* Miniaturas menores e uniformes */
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.thumb-bar img:hover {
+  opacity: 1;
+}
+
+/* O overlay precisa cobrir apenas a imagem de 400x200 */
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 400px;           
+  height: 200px;
+  background-color: rgba(0,0,0,0);
+  pointer-events: none;  
+}
