@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista de Tarefas</title>
+  </head>
+  <body>
+    <div id="organizador">
+      <h3>Tarefas Pendentes:</h3>
+      <ul id="lista-pendentes">
+        <li id="tarefa-carro">Lavar o carro</li>
+        <li id="tarefa-js">Estudar JavaScript</li>
+        <li id="tarefa-livro">Ler livro</li>
+        <li id="tarefa-roupas">Dobrar as roupas</li>
+      </ul>
+
+      <h3>Tarefas Concluídas:</h3>
+      <ul id="lista-concluidas">
+        <li>Fazer compras</li>
+      </ul>
+    </div>
+
+   <script>
+      const listaConcluidas = document.getElementById("lista-concluidas");
+
+      // 1. Adicionadas aspas nos IDs
+      const tarefaJs = document.getElementById("tarefa-js");
+      
+      // 2. Corrigido para acessar o ID da lista corretamente
+      const tarefaCarro = document.getElementById("lista-pendentes").firstElementChild;
+      
+      // 3. Corrigido o ID de "tarefa-roupas" (estava no plural no script)
+      const tarefaLivro = document.getElementById("tarefa-roupas").previousElementSibling;
+
+      // 4. Removendo a tarefa "Lavar o carro"
+      tarefaCarro.remove();
+
+      // 5. Corrigida a sintaxe de alteração de texto
+      tarefaLivro.innerText = "[URGENTE] " + tarefaLivro.innerText;
+
+      // 6. Movendo a tarefa de JS para a lista de concluídas
+      listaConcluidas.appendChild(tarefaJs);
+    </script>
+  </body>
+</html>
