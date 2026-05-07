@@ -28,16 +28,28 @@
       </div>
 
       <script>
-       // Seleciona todos os elementos com a classe "valor"
-      const elementos = document.getElementsByClassName('produto-comprado');
-      let total = 0;
+       // a. Seleciona a lista de produtos e descobre a quantidade
+        const produtos = document.getElementsByClassName('produto-comprado');
+        const quantidadeItens = produtos.length;
 
-      for (let elemento of elementos) {
-      // parseFloat converte o texto "10" em número 10
-      total += parseFloat(elemento.innerText) || 0; 
-      }
+        // b. Captura os valores preenchidos nos inputs (usando ID)
+        const inputSubtotal = document.getElementById('valor-subtotal');
+        const inputFrete = document.getElementById('valor-frete');
 
-console.log("O total é:", total);
+        // Convertendo os textos dos inputs para números decimais
+        const subtotal = parseFloat(inputSubtotal.value);
+        const frete = parseFloat(inputFrete.value);
+
+        // c. Soma os valores para o custo total
+        const valorTotal = subtotal + frete;
+
+        // d. Imprime as 4 informações no console
+        console.log("--- Resumo da Compra ---");
+        console.log("Quantidade de itens:", quantidadeItens);
+        console.log("Subtotal: R$", subtotal.toFixed(2));
+        console.log("Frete: R$", frete.toFixed(2));
+        console.log("Total da Compra: R$", valorTotal.toFixed(2));
+    
       </script>
     </body>
 </html>
