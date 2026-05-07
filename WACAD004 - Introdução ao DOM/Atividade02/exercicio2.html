@@ -21,7 +21,7 @@
 </head>
 <body>
     <div id="painel-sprint" style="max-width: 400px;">
-    <h2>Tarefas da Sprint</h2>
+        <h2>Tarefas da Sprint</h2>
 
         <!-- Card 1 -->
         <div class="card-tarefa card-desatualizado">
@@ -52,20 +52,29 @@
             <h3 style="margin-top: 0;">Corrigir os Testes</h3>
             <p>Status: <span>Urgente</span></p>
         </div
-
-        <script>
-            const cardClassAtualizada = document.getElementById("card-desatualizada");
-            const cardStatus = document.getElementsByTagName("span");
-
-            for (let card of cardClassAtualizada){
-                card.classlist.replace("card-desatualizada", "card-sucesso");
-            }
-          
-
-            for (let cardStatus of cardStatus){
-                cardStatus.style.forweight = "bold";
-            }
-        </script>
     </div>
+    
+    
+     <script>
+        
+            const cardsDesatualizados = document.getElementsByClassName("card-desatualizado");
+            const listaCards = Array.from(cardsDesatualizados); 
+            
+            for (let card of listaCards) {
+                card.classList.replace("card-desatualizado", "card-sucesso");
+            }
+
+            const cardsUrgentes = document.getElementsByClassName("card-urgente");
+            
+            for (let card of cardsUrgentes) {
+                card.style.backgroundColor = "#f8d7da";
+            }
+
+            const spansStatus = document.getElementsByTagName("span");
+
+            for (let span of spansStatus) {
+                span.style.fontWeight = "bold";
+            }
+    </script>
 </body>
 </html>
