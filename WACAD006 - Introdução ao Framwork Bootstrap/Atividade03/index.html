@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>CineList - Gestão de Filmes</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">CineList Adm</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Gerenciar Catálogo</h3>
+            <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#modalFilme">
+                + Novo Filme
+            </button>
+        </div>
+
+        <table class="table table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Gênero</th>
+                    <th>Status (Desafio Extra)</th>
+                    <th class="text-center">Ações (Interatividade)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01</td>
+                    <td>O Senhor dos Anéis</td>
+                    <td>Fantasia</td>
+                    <td><span class="badge rounded-pill bg-success">Assistido</span></td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                        <button class="btn btn-sm btn-outline-danger">Excluir</button>
+                    </td>
+                </tr>
+
+                 <tr>
+                    <td>02</td>
+                    <td>Interestelar</td>
+                    <td>Ficção</td>
+                    <td><span class="badge bg-warning text-dark">Pendente</span></td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-secondary">Editar</button>
+                        <button class="btn btn-sm btn-outline-danger">Excluir</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+
+        <div class="modal fade" id="modalFilme" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Cadastrar Obra</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="cadastroForm">
+                            <div class="mb-3">
+                                <label class="form-label">Nome do Filme</label>
+                                <input type="text" class="form-control" required placeholder="Título original ou traduzido">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Categoria (Gênero)</label>
+                                <select class="form-select">
+                                    <option selected>Selecione...</option>
+                                    <option>Ação</option>
+                                    <option>Drama</option>
+                                    <option>Sci-Fi</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Resumo da Obra</label>
+                                <textarea class="form-control" rows="3" placeholder="Sinopse curta..."></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        <button type="submit" form="cadastroForm" class="btn btn-primary">Confirmar Cadastro</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
