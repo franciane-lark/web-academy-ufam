@@ -25,20 +25,16 @@
       const listaConcluidas = document.getElementById("lista-concluidas");
       const listaPendentes = document.getElementById("lista-pendentes");
 
-      // Apagar "Lavar o carro"
       const tarefaCarro = listaPendentes.firstElementChild;
       tarefaCarro.remove();
 
-      // Mover "Estudar JavaScript"
       const tarefaJs = document.getElementById("tarefa-js");
       listaConcluidas.appendChild(tarefaJs);
 
-      // Criar "Fazer exercícios" (O QUE FALTAVA)
       const novaTarefa = document.createElement("li");
       novaTarefa.innerText = "Fazer exercícios";
       listaPendentes.appendChild(novaTarefa);
 
-      // Adicionar [URGENTE] em "Ler livro"
       const tarefaLivro = document.getElementById("tarefa-roupas").previousElementSibling;
       tarefaLivro.innerText = "[URGENTE] " + tarefaLivro.innerText;
     </script>

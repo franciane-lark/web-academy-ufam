@@ -9,40 +9,31 @@
     <div id="app-tarefas">
     <h3>Minhas Tarefas</h3>
     
-    <!-- Campo de digitação e botão de ação -->
     <input type="text" id="input-nova-tarefa" placeholder="Digite uma tarefa...">
     <button id="btn-adicionar">Adicionar Tarefa</button>
 
-    <!-- Lista onde as tarefas vão aparecer -->
     <ul id="lista-tarefas">
         <li>Revisar código da aula passada</li>
     </ul>
     </div>
     <script>
-            // a. Selecionar o input, o botão e a lista (com aspas!)
             const input = document.getElementById("input-nova-tarefa");
             const botao = document.getElementById("btn-adicionar");
             const lista = document.getElementById("lista-tarefas");
 
-            // b. Adicionar evento de click ao botão
             botao.addEventListener("click", () => {
                 
-                // c. Capture o texto que está no input
                 const textoTarefa = input.value;
 
-                // f. Não permitir adição de tarefas com texto vazio
-                // O .trim() remove espaços em branco acidentais antes e depois do texto
                 if (textoTarefa.trim() === "") {
                     alert("Digite algo antes de adicionar!");
-                    return; // Para a execução aqui se estiver vazio
+                    return;
                 }
 
-                // d. Criar novo elemento, colocar o texto e adicionar na lista
                 const novoItem = document.createElement("li");
                 novoItem.innerText = textoTarefa;
                 lista.appendChild(novoItem);
 
-                // e. Limpar o input
                 input.value = "";
             });
     </script>

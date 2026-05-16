@@ -17,19 +17,15 @@
 
     <script>
         function gerarHistoria() {
-            // "Baldes" de opções
             const personagens = ["Um astronauta perdido", "Um gato mestre de kung fu", "Uma inteligência artificial rebelde", "Um cavaleiro medroso", "Um programador cansado"];
             const acoes = ["descobriu um portal secreto", "venceu um campeonato de xadrez", "derramou café no servidor central", "encontrou um mapa de tesouro", "aprendeu a falar com plantas"];
             const lugares = ["em Marte", "dentro de uma padaria", "no fundo do oceano", "em uma biblioteca mágica", "na nuvem da AWS"];
             const reviravoltas = ["mas tudo era um sonho.", "e isso mudou o mundo para sempre.", "embora ninguém tenha acreditado.", "por causa de um biscoito da sorte.", "e logo depois tirou uma soneca."];
 
-            // Função para escolher um item aleatório
             const sortear = (lista) => lista[Math.floor(Math.random() * lista.length)];
 
-            // Montando a frase
             const fraseFinal = `${sortear(personagens)} ${sortear(acoes)} ${sortear(lugares)}, ${sortear(reviravoltas)}`;
 
-            // Exibindo na tela
             document.getElementById("historia").innerText = fraseFinal;
         }
     </script>

@@ -25,28 +25,25 @@ button {
   margin-left: 200px;
 }
 
-/* Container da imagem principal */
 .full-img {
   position: relative;
-  display: flex; /* Mudamos para flex para alinhar imagem e texto */
+  display: flex;
   flex-direction: column; 
   align-items: center;
-  width: 640px; /* Largura do seu container original */
+  width: 640px; 
   margin: 0 auto;
 }
 
-/* A imagem principal com tamanho fixo */
 .displayed-img {
   width: 400px;
   height: 200px;
-  object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+  object-fit: cover;
   object-fit: cover;
   display: block;
 }
 
-/* Estilo para o texto embaixo da imagem */
 .image-text {
-  width: 400px; /* Mesma largura da imagem */
+  width: 400px; 
   text-align: center;
   margin-top: 15px;
 
@@ -55,7 +52,6 @@ button {
   line-height: 1.4;
 }
 
-/* Ajuste das miniaturas para não quebrarem o layout */
 .thumb-bar {
   clear: both;
   display: flex;
@@ -64,7 +60,7 @@ button {
 }
 
 .thumb-bar img {
-  width: 100px; /* Miniaturas menores e uniformes */
+  width: 100px;
   height: 60px;
   object-fit: cover;
   cursor: pointer;
@@ -75,7 +71,6 @@ button {
   opacity: 1;
 }
 
-/* O overlay precisa cobrir apenas a imagem de 400x200 */
 .overlay {
   position: absolute;
   top: 0;

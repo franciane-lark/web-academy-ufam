@@ -1,13 +1,12 @@
 
-//acessando a pagina html
+
 const displayedImage = document.querySelector('.displayed-img');
-const imageText = document.querySelector('.image-text'); // Novo elemento para o texto
+const imageText = document.querySelector('.image-text'); 
 const thumbBar = document.querySelector('.thumb-bar');
-const btnNext = document.querySelector('.next-btn'); // Botão de próximo
-const btnDark = document.querySelector('.dark'); // Botão de escurecer
+const btnNext = document.querySelector('.next-btn');
+const btnDark = document.querySelector('.dark'); 
 const overlay = document.querySelector('.overlay');
 
-/* Declarando um array de dicionario para imagens e texto */
 const images = [
     { id: 1, imgPath: './images/gato1.webp', text: "Meow meow" },
     { id: 2, imgPath: './images/gato2.jpg', text: "Meeeeeoooow" },
@@ -17,19 +16,14 @@ const images = [
 ];
 
 
-// Variavel para controlar qual imagem está aparecendo
 let currentIndex = 0;
 
-// Função para atualizar a imagem e o texto na tela
 function updateGallery(index) {
     displayedImage.setAttribute('src', images[index].imgPath);
     imageText.textContent = images[index].text;
 }
-
-//chamando a updateGallery para mostrar os dados da primeira posicao
 updateGallery(currentIndex)
 
-// Logica do botao proximo
 btnNext.addEventListener('click', () => {
     currentIndex++;
     if (currentIndex >= images.length) {
@@ -44,4 +38,3 @@ newImage.setAttribute('src', xxx);
 newImage.setAttribute('alt', xxx);
 thumbBar.appendChild(newImage);
 
-/* Wiring up the Darken/Lighten button */
