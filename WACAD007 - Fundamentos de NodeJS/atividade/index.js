@@ -2,12 +2,10 @@ require('dotenv').config() // Carrega as variáveis do .env
 const fs = require("fs")
 const http = require("http")
 
-// Define a porta a partir do .env ou usa 3000 como fallback
 const PORT = process.env.PORT || 3000
 const FOLDER = process.argv[2]
 
 const server = http.createServer((req, res) => {
-    // Verificação simples caso o diretório não seja passado
     if (!FOLDER) {
         res.writeHead(400, {"content-type": "text/plain;charset=utf-8"})
         return res.end("Erro: Informe o diretório nos argumentos do processo.")

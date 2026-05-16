@@ -1,7 +1,3 @@
-
-
-/*
-
 const FOLDER = process.argv[2]
 console.log(FOLDER)
 
@@ -14,6 +10,8 @@ const server = http.createServer(function (req, res) {
  res.end();
 });
 server.listen(PORT);
+
+/*
 
 --------------------------------------------------------------------
 const http = require("http")
