@@ -1,9 +1,17 @@
-require('dotenv').config()
+const path = require('path')
+
+const envFile = process.env.NODE_ENV === 'production' 
+    ? '.env.production' 
+    : '.env.development'
+
+require('dotenv').config({ path: path.resolve(process.cwd(), envFile) })
+
 const fs = require("fs")
 const http = require("http")
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000 
 const FOLDER = process.argv[2] 
+   
 
 const server = http.createServer((req, res) => {
     if (req.url === '/favicon.ico') {
