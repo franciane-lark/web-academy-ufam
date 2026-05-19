@@ -1,14 +1,15 @@
-const path = require('path');
+import path from 'node:path';
+import fs from 'node:fs';
+import http from 'node:http';
+import dotenv from 'dotenv';
+
+import { createLink } from './links.js';
 
 const envFile = process.env.NODE_ENV === 'production' 
     ? '.env.production' 
     : '.env.development';
 
-require('dotenv').config({ path: path.resolve(process.cwd(), envFile) });
-
-const fs = require("fs");
-const http = require("http");
-const { createLink } = require("./links");
+dotenv.config({ path: path.resolve(process.cwd(), envFile) });
 
 const PORT = process.env.PORT || 3000;
 const FOLDER = process.argv[2]; 
@@ -46,13 +47,12 @@ const server = http.createServer((req, res) => {
 
         fs.readFile(filePath, "utf-8", (err, data) => {
             if (err) {
-                // Se o arquivo não existir ou não puder ser lido
                 res.writeHead(404, {"content-type": "text/html;charset=utf-8"});
                 return res.end(`<h3>Arquivo não encontrado</h3><br><a href="/">Voltar</a>`);
             }
 
             res.writeHead(200, {"content-type": "text/html;charset=utf-8"});
-   
+            
             const formattedContent = data.replace(/\n/g, "<br>");
             
             res.write(`${formattedContent}<br><br>`);
