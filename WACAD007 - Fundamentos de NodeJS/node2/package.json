@@ -1,21 +1,18 @@
 {
-  "name": "node1",
+  "name": "node2",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.js",
-  "dependencies": {
-    "dotenv": "^17.4.2"
+  "scripts": {
+    "dev": "nodemon src/index.js"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development nodemon src/index.js",
-    "start:prod": "NODE_ENV=production node src/index.js"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.4.2"
+  }
 }
