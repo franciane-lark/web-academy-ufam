@@ -16,8 +16,8 @@ class GerenciadorLembretes {
             titulo,
             agora,
             agora,
-            dataLimite || null,
-            descricao || null
+            dataLimite,
+            descricao
         ];
         this.lembretes.push(novo);
         return novo;
@@ -30,15 +30,18 @@ class GerenciadorLembretes {
         this.autenticar(auth);
         const index = this.lembretes.findIndex(l => l[0] === id);
         if (index !== -1) {
-            const [idAt, , insercaoAt] = this.lembretes[index];
-            this.lembretes[index] = [
-                idAt,
-                novosDados.titulo,
-                insercaoAt,
-                new Date(),
-                novosDados.dataLimite,
-                novosDados.descricao
-            ];
+            const lembreteAlvo = this.lembretes[index];
+            if (lembreteAlvo) {
+                const [idAt, , insercaoAt] = lembreteAlvo;
+                this.lembretes[index] = [
+                    idAt,
+                    novosDados.titulo,
+                    insercaoAt,
+                    new Date(),
+                    novosDados.dataLimite,
+                    novosDados.descricao
+                ];
+            }
         }
     }
     apagar(auth, id) {
@@ -48,7 +51,7 @@ class GerenciadorLembretes {
 }
 const app = new GerenciadorLembretes();
 let usuarioLogado = null;
-let idEmEdicao = null; // Controla se estamos editando ou criando
+let idEmEdicao = null;
 const secaoLogin = document.getElementById("secao-login");
 const secaoApp = document.getElementById("secao-app");
 const formLogin = document.getElementById("form-login");
@@ -91,7 +94,7 @@ formLembrete.addEventListener("submit", (e) => {
         formLembrete.querySelector("button").textContent = "Salvar Lembrete";
     }
     else {
-        app.criar(usuarioLogado, titulo, dataLimite || undefined, descricao || undefined);
+        app.criar(usuarioLogado, titulo, dataLimite, descricao);
     }
     formLembrete.reset();
     renderizar();
@@ -106,9 +109,12 @@ function renderizar() {
         const txtInsercao = insercao.toLocaleDateString() + " às " + insercao.toLocaleTimeString();
         const txtAlteracao = alteracao.toLocaleDateString() + " às " + alteracao.toLocaleTimeString();
         const txtLimite = limite ? new Date(limite).toLocaleDateString() : "Não definida";
+        const ISOlimite = limite ? new Date(limite).toISOString().split('T')[0] : '';
+        const descSegura = descricao ? descricao.replace(/'/g, "\\'") : '';
+        const tituloSeguro = titulo.replace(/'/g, "\\'");
         card.innerHTML = `
-            <span class="danger" onclick="deletarLembrete('${id}')"> Apagar</span>
-            <span class="edit" onclick="prepararEdicao('${id}', '${titulo}', '${limite ? inputDataLimite.value : ''}', '${descricao || ''}')"> Editar</span>
+            <span class="danger" style="color: red; cursor: pointer; float: right;" onclick="deletarLembrete('${id}')">Apagar</span>
+            <span class="edit" style="color: blue; cursor: pointer; float: right; margin-right: 15px;" onclick="prepararEdicao('${id}', '${tituloSeguro}', '${ISOlimite}', '${descSegura}')">✏️ Editar</span>
             <h4>${titulo}</h4>
             <p><small>Criado em: ${txtInsercao}</small></p>
             <p><small>Modificado em: ${txtAlteracao}</small></p>

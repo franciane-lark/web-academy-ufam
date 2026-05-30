@@ -42,17 +42,20 @@ class GerenciadorLembretes {
         return this.lembretes;
     }
 
-    public editar(
-        auth: CredenciaisAutenticacao | null, 
-        id: string, 
-        novosDados: { titulo: string; dataLimite: Date | null; descricao: string | null }
+   public editar(
+    auth: CredenciaisAutenticacao | null, 
+    id: string, 
+    novosDados: { titulo: string; dataLimite: Date | null; descricao: string | null }
     ): void {
-        this.autenticar(auth);
-        
-        const index = this.lembretes.findIndex(l => l[0] === id);
-        
-        if (index !== -1) {
-            const [idAt, , insercaoAt] = this.lembretes[index]; 
+    this.autenticar(auth);
+    
+    const index = this.lembretes.findIndex(l => l[0] === id);
+    
+    if (index !== -1) {
+        const lembreteAlvo = this.lembretes[index]; 
+       
+        if (lembreteAlvo) {
+            const [idAt, , insercaoAt] = lembreteAlvo; 
             
             this.lembretes[index] = [
                 idAt,
@@ -64,6 +67,7 @@ class GerenciadorLembretes {
             ];
         }
     }
+}
 
     public apagar(auth: CredenciaisAutenticacao | null, id: string): void {
         this.autenticar(auth);
