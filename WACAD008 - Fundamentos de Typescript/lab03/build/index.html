@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Carrinho de Compras</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
+        body { background-color: #f4f6f9; color: #333; padding: 20px; display: flex; gap: 20px; max-width: 1200px; margin: 0 auto; }
+        h2 { margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; }
+        
+        .panel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); flex: 1; }
+        .sidebar { max-width: 400px; }
+        
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #4a5568; }
+        input, select { width: 100%; padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 14px; }
+        
+        button { width: 100%; padding: 10px; background: #3182ce; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        button:hover { background: #2b6cb0; }
+        
+        .stats-card { background: #ebf8ff; border: 1px solid #bee3f8; padding: 15px; border-radius: 6px; margin-bottom: 20px; }
+        .stats-line { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 16px; }
+        .total-highlight { font-size: 20px; font-weight: bold; color: #2b6cb0; }
+        
+        .item-carrinho { padding: 10px; border-bottom: 1px solid #edf2f7; font-size: 14px; }
+        .item-carrinho:last-child { border-bottom: none; }
+
+        /* --- SISTEMA DE ALTERNÂNCIA DE CAMPOS --- */
+        .dinamico { display: none; }
+        .dinamico.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <div class="panel sidebar">
+        <h2>Adicionar Produto</h2>
+        
+        <div class="form-group">
+            <label for="tipoProduto">Tipo de Produto</label>
+            <select id="tipoProduto">
+                <option value="tv">TV</option>
+                <option value="celular">Celular</option>
+                <option value="bike">Bicicleta</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="text" id="modelo" placeholder="Ex: Crystal UHD / iPhone 13 / Elite">
+        </div>
+
+        <div class="form-group">
+            <label for="fabricante">Fabricante</label>
+            <input type="text" id="fabricante" placeholder="Ex: Samsung / Apple / Caloi">
+        </div>
+
+        <div class="form-group">
+            <label for="preco">Preço Unitário (R$)</label>
+            <input type="number" id="preco" step="0.01" placeholder="0.00">
+        </div>
+
+        <div class="form-group">
+            <label for="quantidade">Quantidade</label>
+            <input type="number" id="quantidade" value="1" min="1">
+        </div>
+
+        <div id="blocoTv" class="dinamico active">
+            <div class="form-group">
+                <label for="resolucao">Resolução da Tela</label>
+                <input type="text" id="resolucao" placeholder="Ex: 4K Ultra HD, 8K">
+            </div>
+            <div class="form-group">
+                <label for="polegadas">Tamanho (Polegadas)</label>
+                <input type="number" id="polegadas" placeholder="Ex: 55, 65">
+            </div>
+        </div>
+
+        <div id="blocoCelular" class="dinamico">
+            <div class="form-group">
+                <label for="memoria">Memória Interna (GB)</label>
+                <input type="number" id="memoria" placeholder="Ex: 128, 256">
+            </div>
+        </div>
+
+        <div id="blocoBike" class="dinamico">
+            <div class="form-group">
+                <label for="aro">Tamanho do Aro (Polegadas)</label>
+                <input type="number" id="aro" placeholder="Ex: 26, 29">
+            </div>
+        </div>
+
+        <button id="btnAdicionar">Inserir no Carrinho</button>
+    </div>
+
+    <div class="panel">
+        <h2>Estatísticas do Carrinho</h2>
+        <div class="stats-card">
+            <div class="stats-line">
+                <span>Quantidade de Itens distintos:</span>
+                <span id="statItens" style="font-weight: bold;">0</span>
+            </div>
+            <div class="stats-line total-highlight">
+                <span>Valor Total:</span>
+                <span>R$ <span id="statTotal">0.00</span></span>
+            </div>
+        </div>
+
+        <h2>Itens no Carrinho</h2>
+        <div id="listaItens">
+            <p style="color: #a0aec0; font-style: italic; padding: 10px;">O carrinho está vazio.</p>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

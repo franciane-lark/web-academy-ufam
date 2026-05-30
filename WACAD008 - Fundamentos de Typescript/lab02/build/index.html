@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Turma</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 { margin-top: 0; color: #4A90E2; }
+        .form-group { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button {
+            width: 100%; padding: 10px; background-color: #4A90E2;
+            color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;
+        }
+        button:hover { background-color: #357ABD; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; }
+        .dashboard {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            background: #4A90E2;
+            color: white;
+        }
+        .card-media { text-align: center; flex: 1; }
+        .card-media h3 { margin: 5px 0; font-size: 24px; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center;">Painel da Turma</h1>
+
+    <div class="container">
+        <div class="box dashboard">
+            <div class="card-media">
+                <p>Total Alunos</p>
+                <h3 id="media-total">0</h3>
+            </div>
+            <div class="card-media">
+                <p>Média Idade</p>
+                <h3 id="media-idade">0</h3>
+            </div>
+            <div class="card-media">
+                <p>Média Altura</p>
+                <h3 id="media-altura">0m</h3>
+            </div>
+            <div class="card-media">
+                <p>Média Peso</p>
+                <h3 id="media-peso">0kg</h3>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>Adicionar Aluno</h2>
+            <form id="form-aluno">
+                <div class="form-group">
+                    <label>Nome Completo:</label>
+                    <input type="text" id="nome" required placeholder="Ex: Thiago Silva">
+                </div>
+                <div class="form-group">
+                    <label>Idade:</label>
+                    <input type="number" id="idade" required placeholder="Ex: 20">
+                </div>
+                <div class="form-group">
+                    <label>Altura (metros):</label>
+                    <input type="number" step="0.01" id="altura" required placeholder="Ex: 1.75">
+                </div>
+                <div class="form-group">
+                    <label>Peso (kg):</label>
+                    <input type="number" step="0.1" id="peso" required placeholder="Ex: 72.5">
+                </div>
+                <button type="submit">Adicionar na Turma</button>
+            </form>
+        </div>
+
+        <div class="box">
+            <h2>Alunos na Turma</h2>
+            <ul id="lista-alunos"></ul>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
