@@ -50,14 +50,12 @@ class Cart {
     calculatePurchaseValue() {
         return this.cartList.reduce((total, item) => total + item.getProductPriceTotal(), 0);
     }
-    getPurchaseValue() { return this.purchaseValue; }
-    getCartLenght() { return this.cartList.length; }
-    getCartProductList() { return this.cartList; }
+    getPurchaseValue() { return this.purchaseValue; } // retorna o valor total da compra de compras
+    getCartLenght() { return this.cartList.length; } // retorna a quantidade de itens do carrinho de compras
+    getCartProductList() { return this.cartList; } // retorna a lista de CartProducts 
 }
-// --- SISTEMA EM EXECUÇÃO ---
 const meuCarrinho = new Cart();
 let idContador = 1;
-// Função responsável por alternar as views dos blocos dinâmicos
 function alternarCamposDinamicos() {
     var _a, _b, _c;
     const tipoProdutoEl = document.getElementById('tipoProduto');
@@ -109,12 +107,9 @@ function limparFormulario() {
     document.getElementById('memoria').value = '';
     document.getElementById('aro').value = '';
 }
-// --- MAPEAMENTO DOS LISTENERS APÓS O CARREGAMENTO DO DOM ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Escuta a mudança de tipo de produto para alternar os blocos na tela
     const tipoProdutoEl = document.getElementById('tipoProduto');
     tipoProdutoEl === null || tipoProdutoEl === void 0 ? void 0 : tipoProdutoEl.addEventListener('change', alternarCamposDinamicos);
-    // Escuta o clique do botão Inserir
     const btnAdicionar = document.getElementById('btnAdicionar');
     btnAdicionar === null || btnAdicionar === void 0 ? void 0 : btnAdicionar.addEventListener('click', () => {
         const tipo = document.getElementById('tipoProduto').value;
@@ -132,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const memoria = parseInt(document.getElementById('memoria').value) || 0;
             novoProduto = new EletronicProduct(idContador++, "Celular", modelo, preco, fabricante, null, null, memoria);
         }
-        else { // bike
+        else {
             const aro = parseInt(document.getElementById('aro').value) || 0;
             novoProduto = new Bike(idContador++, "Bicicleta", modelo, preco, fabricante, aro);
         }

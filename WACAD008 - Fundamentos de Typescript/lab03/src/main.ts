@@ -1,10 +1,3 @@
-
-/*
- * ============== CLASSES RELACIONADAS A PRODUTOS ======================
-* */
-
-// Classe Pai de Produtos - Esta classe apresenta todos os atributos comuns relacionados 
-// a todos os produtos 
 class Product {
     id: number;
     productName: string;
@@ -30,9 +23,6 @@ class Product {
 }
 
 
-
-// Classe especializada de Produtos Eletronicos. Esta classe herda de Product, logo além de ter 
-// os atributos próprios relacionados a produtos eletrônicos, ela herdará os atributos da classe pai Produtos
 class EletronicProduct extends Product {
     screenResolution: string | null;
     screenInches: number | null;
@@ -56,7 +46,6 @@ class EletronicProduct extends Product {
 }
 
 
-// Classe Bike, herdada de Produtos.
 class Bike extends Product {
     rim: number;
 
@@ -66,15 +55,6 @@ class Bike extends Product {
     }
 }
 
-
-/*
- * ============= CLASSES RELACIONADAS AO CARRINHO ===================
-* */
-
-
-//classe de Produto do Carrinho - É uma classe de suporte, na qual terá um produto em si, sua a quantidade 
-//daquele produto que está sendo comprada e também será responsável por fornecer o valor daquele produto que está no carrinho
-//(o valor aqui é calculado pelo preço unitário do produto X a quantidade daquele produto posta no carrinho)
 class CartProduct {
     product: Product;
     productQuantity: number;
@@ -91,11 +71,6 @@ class CartProduct {
     getProduct(): Product { return this.product; }
 }
 
-
-
-// classe de Carrinho, responsável por gerenciar o carrinho como um todo. 
-// Esta classe trabalha em conjunto com a classe CartProduct, que irá prover a informação importante 
-// do valor pela quantidade de determinado produto posto no carrinho. 
 class Cart {
     cartList: CartProduct[];
     purchaseValue: number;
@@ -105,37 +80,26 @@ class Cart {
         this.purchaseValue = 0.0;
     }
 
-    //adiciona novo produto ao carrinho
     addProductToCart(cartProduct: CartProduct): void {
         this.cartList.push(cartProduct);
         this.purchaseValue = this.calculatePurchaseValue();
     }
 
-    //calcula o preço total do carrinho de compras 
     calculatePurchaseValue(): number {
         return this.cartList.reduce((total, item) => total + item.getProductPriceTotal(), 0);
     }
 
-    getPurchaseValue(): number { return this.purchaseValue; } // retorna o valor total da compra de compras
-    getCartLenght(): number { return this.cartList.length; } // retorna a quantidade de itens do carrinho de compras
-    getCartProductList(): CartProduct[] { return this.cartList; } // retorna a lista de CartProducts 
+    getPurchaseValue(): number { return this.purchaseValue; }
+    getCartLenght(): number { return this.cartList.length; } 
+    getCartProductList(): CartProduct[] { return this.cartList; }
 }
 
 
 
-
-
-
-// --- SISTEMA EM EXECUÇÃO ---
-//criamos um carrinho aqui
 const meuCarrinho = new Cart();
 let idContador = 1;
 
 
-
-
-
-// Função responsável por alternar as views dos blocos dinâmicos
 function alternarCamposDinamicos(): void {
     const tipoProdutoEl = document.getElementById('tipoProduto') as HTMLSelectElement | null;
     if (!tipoProdutoEl) return;
@@ -190,13 +154,10 @@ function limparFormulario(): void {
     (document.getElementById('aro') as HTMLInputElement).value = '';
 }
 
-// --- MAPEAMENTO DOS LISTENERS APÓS O CARREGAMENTO DO DOM ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Escuta a mudança de tipo de produto para alternar os blocos na tela
     const tipoProdutoEl = document.getElementById('tipoProduto');
     tipoProdutoEl?.addEventListener('change', alternarCamposDinamicos);
 
-    // Escuta o clique do botão Inserir
     const btnAdicionar = document.getElementById('btnAdicionar');
     btnAdicionar?.addEventListener('click', () => {
         const tipo = (document.getElementById('tipoProduto') as HTMLSelectElement).value;
@@ -214,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tipo === 'celular') {
             const memoria = parseInt((document.getElementById('memoria') as HTMLInputElement).value) || 0;
             novoProduto = new EletronicProduct(idContador++, "Celular", modelo, preco, fabricante, null, null, memoria);
-        } else { // bike
+        } else { 
             const aro = parseInt((document.getElementById('aro') as HTMLInputElement).value) || 0;
             novoProduto = new Bike(idContador++, "Bicicleta", modelo, preco, fabricante, aro);
         }
