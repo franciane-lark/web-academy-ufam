@@ -1,5 +1,3 @@
-
-//classe referente aos alunos - Alunos estarão alocados em uma turma
 class Aluno {
     id: number;
     nomeCompleto: string;
@@ -17,7 +15,6 @@ class Aluno {
 }
 
 
-//classe relacionada à turma
 class Turma {
     id: number;
     nome: string;
@@ -30,12 +27,10 @@ class Turma {
     }
 
 
-    //retorna a quantidade de alunos
     getNumAlunos(): number {
         return this.alunos.length;
     }
 
-    //retorna a media de idade
     getMediaIdade(): string {
         if (this.alunos.length === 0) return "0";
         const soma = this.alunos.reduce((acc, a) => acc + a.idade, 0);
@@ -43,7 +38,6 @@ class Turma {
     }
 
 
-    //retorna a media de alturas
     getMediaAlturas(): string {
         if (this.alunos.length === 0) return "0";
         const soma = this.alunos.reduce((acc, a) => acc + a.altura, 0);
@@ -51,7 +45,6 @@ class Turma {
     }
 
 
-    //retorna a media de pesos
     getMediaPesos(): string {
         if (this.alunos.length === 0) return "0";
         const soma = this.alunos.reduce((acc, a) => acc + a.peso, 0);
@@ -60,14 +53,11 @@ class Turma {
 }
 
 
-//instancia uuma turma
 const minhaTurma = new Turma(1, "Turma de TypeScript");
 let proximoId = 1;
 
 
-//metodos de suporte ao html
 function atualizarInterface(): void {
-    // Tipando os elementos para o TypeScript aceitar a manipulação do DOM sem reclamar
     const mediaTotalEl = document.getElementById('media-total');
     const mediaIdadeEl = document.getElementById('media-idade');
     const mediaAlturaEl = document.getElementById('media-altura');
@@ -92,7 +82,6 @@ function atualizarInterface(): void {
     }
 }
 
-// Listener do formulário
 const formAluno = document.getElementById('form-aluno') as HTMLFormElement | null;
 if (formAluno) {
     formAluno.addEventListener('submit', function(evento: Event) {
@@ -109,6 +98,6 @@ if (formAluno) {
         atualizarInterface();
 
         formAluno.reset();
-                               (document.getElementById('nome') as HTMLInputElement).focus();
+        (document.getElementById('nome') as HTMLInputElement).focus();
     });
 }

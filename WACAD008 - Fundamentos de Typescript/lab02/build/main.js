@@ -39,7 +39,6 @@ class Turma {
 const minhaTurma = new Turma(1, "Turma de TypeScript");
 let proximoId = 1;
 function atualizarInterface() {
-    // Tipando os elementos para o TypeScript aceitar a manipulação do DOM sem reclamar
     const mediaTotalEl = document.getElementById('media-total');
     const mediaIdadeEl = document.getElementById('media-idade');
     const mediaAlturaEl = document.getElementById('media-altura');
@@ -65,7 +64,6 @@ function atualizarInterface() {
         });
     }
 }
-// Listener do formulário
 const formAluno = document.getElementById('form-aluno');
 if (formAluno) {
     formAluno.addEventListener('submit', function (evento) {
