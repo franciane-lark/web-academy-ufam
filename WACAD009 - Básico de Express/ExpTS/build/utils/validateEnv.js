@@ -8,5 +8,6 @@ const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const env = (0, envalid_1.cleanEnv)(process.env, {
     PORT: (0, envalid_1.port)({ default: 3333 }),
+    LOG_DIR: (0, envalid_1.str)({ default: 'logs' }),
 });
 exports.default = env;
