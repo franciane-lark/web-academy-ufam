@@ -1,6 +1,21 @@
 import { Request, Response } from 'express';
 import { LoremIpsum } from 'lorem-ipsum';
 
+interface Produto {
+  id: number;
+  nome: string;
+  preco: number;
+}
+
+let produtosDB: Produto[] = [
+  { id: 1, nome: 'Celular Samsung Galaxy S23', preco: 3000 },
+  { id: 2, nome: 'Tablet Samsung Galaxy 3', preco: 4000 },
+  { id: 3, nome: 'Monitor Dell DMD34', preco: 2550 },
+  { id: 4, nome: 'Ar-condicionado Split Samsung Digital Inverter', preco: 3000 },
+  { id: 5, nome: 'Ar-condicionado Split Samsung Digital Conventional', preco: 2500 },
+  { id: 6, nome: 'Ar-condicionado Window Samsung Digital Conventional', preco: 2000 }
+];
+
 const lorem = new LoremIpsum({
   sentencesPerParagraph: { max: 8, min: 4 },
   wordsPerSentence: { max: 16, min: 4 }
@@ -58,5 +73,15 @@ export const mainController = {
       { name: 'Sequelize', type: 'ORM tool', poweredByNodejs: true },
     ];
     res.render('hb4', { technologies });
+  },
+
+  produtos: (req: Request, res: Response) => {
+    res.render('produto/index', { produtos: produtosDB });
+  },
+
+  deleteProduto: (req: Request, res: Response) => {
+    const id = parseInt(req.params.id, 10);
+    produtosDB = produtosDB.filter(p => p.id !== id);
+    res.redirect('/produto'); // Recarrega a página atualizada
   }
 };

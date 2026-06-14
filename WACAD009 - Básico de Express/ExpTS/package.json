@@ -4,7 +4,7 @@
   "description": "",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc && mkdir -p build/views && cp -r src/views/* build/views/ && mkdir -p build/public && cp -r src/public/* build/public/ 2>/dev/null || true",
+    "build": "tsc && cpx \"src/views/**/*\" build/views && cpx \"src/public/**/*\" build/public",
     "start": "node build/index.js",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix"
@@ -21,6 +21,7 @@
     "@types/express-handlebars": "^6.0.2",
     "@types/node": "^20.11.0",
     "cpx": "^1.5.0",
+    "cpx2": "^9.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
