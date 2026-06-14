@@ -61,15 +61,25 @@ const logger_1 = require("./middlewares/logger");
 const router_1 = __importDefault(require("./router/router"));
 const app = (0, express_1.default)();
 const PORT = validateEnv_1.default.PORT;
-// Configuração do Handlebars
 app.engine('hbs', (0, express_handlebars_1.engine)({
     extname: '.hbs',
     defaultLayout: 'main',
+    helpers: {
+        listarNode: function (context) {
+            let out = "<ul>";
+            context.forEach(tech => {
+                if (tech.poweredByNodejs) {
+                    out += `<li>${tech.name} - ${tech.type}</li>`;
+                }
+            });
+            out += "</ul>";
+            return out;
+        }
+    }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path_1.default.join(__dirname, 'views'));
 app.use((0, logger_1.loggerMiddleware)('simples'));
-// Carrega as rotas
 app.use(router_1.default);
 app.listen(PORT, () => {
     console.log(`Express app iniciada na porta ${PORT}.`);

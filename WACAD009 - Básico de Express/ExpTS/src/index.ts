@@ -62,13 +62,25 @@ const PORT = env.PORT;
 app.engine('hbs', engine({
   extname: '.hbs',
   defaultLayout: 'main',
+  helpers: {
+    listarNode: function(context: Array<{ name: string, type: string, poweredByNodejs: boolean }>) {
+      let out = "<ul>";
+      context.forEach(tech => {
+        if (tech.poweredByNodejs) {
+          out += `<li>${tech.name} - ${tech.type}</li>`;
+        }
+      });
+      out += "</ul>";
+      return out;
+    }
+  }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(loggerMiddleware('simples'));
 
-3333333333333333333333333333333333app.use(router);
+app.use(router);
 
 app.listen(PORT, () => {
     console.log(`Express app iniciada na porta ${PORT}.`);

@@ -42,14 +42,20 @@ export default router;
 
 */
 
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router, Request, Response } from 'express';
 import { LoremIpsum } from 'lorem-ipsum';
 
 const router = Router();
 
 const lorem = new LoremIpsum({
-  sentencesPerParagraph: { max: 8, min: 4 },
-  wordsPerSentence: { max: 16, min: 4 }
+  sentencesPerParagraph: {
+    max: 8,
+    min: 4
+  },
+  wordsPerSentence: {
+    max: 16,
+    min: 4
+  }
 });
 
 router.get('/', (req: Request, res: Response) => {
@@ -60,7 +66,7 @@ router.get('/lorem/:paragrafos', (req: Request, res: Response) => {
   const quantidadeParagrafos = parseInt(String(req.params.paragrafos), 10);
 
   if (isNaN(quantidadeParagrafos) || quantidadeParagrafos <= 0) {
-    res.status(400).send('Por favor, informe um número válido de parágrafos.');
+    res.status(400).send('Por favor, informe um número válido de parágrafos. Ex: /lorem/4');
     return;
   }
 
@@ -88,8 +94,21 @@ router.get('/hb3', (req: Request, res: Response) => {
     { nome: 'Edleno Moura', sala: '1236' },
     { nome: 'Elaine Harada', sala: '1231' }
   ];
-
   res.render('hb3', { professores: listaProfessores });
+});
+
+router.get('/hb4', (req: Request, res: Response) => {
+  const technologies = [
+    { name: 'Express', type: 'Framework', poweredByNodejs: true },
+    { name: 'Laravel', type: 'Framework', poweredByNodejs: false },
+    { name: 'React', type: 'Library', poweredByNodejs: true },
+    { name: 'Handlebars', type: 'Engine View', poweredByNodejs: true },
+    { name: 'Django', type: 'Framework', poweredByNodejs: false },
+    { name: 'Docker', type: 'Virtualization', poweredByNodejs: false },
+    { name: 'Sequelize', type: 'ORM tool', poweredByNodejs: true },
+  ];
+
+  res.render('hb4', { technologies });
 });
 
 export default router;
