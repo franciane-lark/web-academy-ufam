@@ -13,10 +13,14 @@
     "dotenv": "^16.6.1",
     "envalid": "^8.1.1",
     "express": "^4.19.2",
-    "lorem-ipsum": "^3.0.0"
+    "express-handlebars": "^9.0.1",
+    "lorem-ipsum": "^3.0.0",
+    "run": "^1.5.0",
+    "start": "^5.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "@types/express-handlebars": "^6.0.2",
     "@types/node": "^25.9.2",
     "eslint": "^10.4.1",
     "eslint-config-prettier": "^10.1.8",

@@ -31,7 +31,6 @@ app.listen(PORT, () => {
     console.log(`Express app iniciada na porta ${PORT}.`);
 });
 
-*/
 
 import express from 'express';
 import env from './utils/validateEnv';
@@ -44,6 +43,32 @@ const PORT = env.PORT;
 app.use(loggerMiddleware('simples'));
 
 app.use(router); 
+
+app.listen(PORT, () => {
+    console.log(`Express app iniciada na porta ${PORT}.`);
+});
+*/
+
+import express from 'express';
+import { engine } from 'express-handlebars';
+import path from 'path';
+import env from './utils/validateEnv';
+import { loggerMiddleware } from './middlewares/logger';
+import router from './router/router';
+
+const app = express();
+const PORT = env.PORT;
+
+app.engine('hbs', engine({
+  extname: '.hbs',
+  defaultLayout: 'main',
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.use(loggerMiddleware('simples'));
+
+3333333333333333333333333333333333app.use(router);
 
 app.listen(PORT, () => {
     console.log(`Express app iniciada na porta ${PORT}.`);
