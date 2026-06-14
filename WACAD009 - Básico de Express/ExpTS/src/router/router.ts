@@ -40,7 +40,7 @@ const quantidadeParagrafos = parseInt(String(req.params.paragrafos), 10);
 
 export default router;
 
-*/
+
 
 import { Router, Request, Response } from 'express';
 import { LoremIpsum } from 'lorem-ipsum';
@@ -110,5 +110,21 @@ router.get('/hb4', (req: Request, res: Response) => {
 
   res.render('hb4', { technologies });
 });
+
+export default router;
+
+*/
+
+import { Router } from 'express';
+import { mainController } from '../controllers/main';
+
+const router = Router();
+
+router.get('/', mainController.index);
+router.get('/lorem/:paragrafos', mainController.lorem);
+router.get('/hb1', mainController.hb1);
+router.get('/hb2', mainController.hb2);
+router.get('/hb3', mainController.hb3);
+router.get('/hb4', mainController.hb4);
 
 export default router;

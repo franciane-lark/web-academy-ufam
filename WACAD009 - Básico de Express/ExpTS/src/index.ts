@@ -52,6 +52,8 @@ app.listen(PORT, () => {
 import express from 'express';
 import { engine } from 'express-handlebars';
 import path from 'path';
+import fs from 'fs'; 
+import * as sass from 'sass-embedded';
 import env from './utils/validateEnv';
 import { loggerMiddleware } from './middlewares/logger';
 import router from './router/router';
@@ -78,8 +80,27 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(loggerMiddleware('simples'));
+try {
+  const scssPath = path.join(__dirname, 'public/css/estilos.scss');
+  const cssDir = path.join(__dirname, 'public/css');
+  const cssReleasePath = path.join(__dirname, 'public/css/estilos.css');
 
+  if (!fs.existsSync(cssDir)) {
+    fs.mkdirSync(cssDir, { recursive: true });
+  }
+
+  if (fs.existsSync(scssPath)) {
+    const result = sass.compile(scssPath);
+    fs.writeFileSync(cssReleasePath, result.css);
+    console.log('SASS compilado com sucesso nativamente!');
+  }
+} catch (err) {
+  console.error('Erro ao compilar SASS:', err);
+}
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(loggerMiddleware('simples'));
 app.use(router);
 
 app.listen(PORT, () => {
