@@ -1,0 +1,112 @@
+datasource db {
+  provider = "mysql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Cliente {
+  id           Int        @id @default(autoincrement()) @map("id_cliente")
+  nomeCompleto String     @map("nome_completo") @db.VarChar(100)
+  cpf          String     @unique @db.VarChar(14)
+  celular      String?    @db.VarChar(20)
+  email        String?    @db.VarChar(100)
+  dataNasc     DateTime?  @map("data_nasc") @db.Date
+
+  enderecos    Endereco[]
+  compras      Compra[]
+
+  @@map("cliente")
+}
+
+model Endereco {
+  id          Int      @id @default(autoincrement()) @map("id_endereco")
+  clienteId   Int      @map("id_cliente")
+  logradouro  String   @db.VarChar(100)
+  numero      String?  @db.VarChar(10)
+  complemento String?  @db.VarChar(100)
+  bairro      String?  @db.VarChar(50)
+  cidade      String?  @db.VarChar(50)
+  estado      String?  @db.VarChar(2)
+  cep         String?  @db.VarChar(10)
+
+  cliente     Cliente  @relation(fields: [clienteId], references: [id])
+  compras     Compra[]
+
+  @@map("endereco")
+}
+
+model Categoria {
+  id            Int            @id @default(autoincrement()) @map("id_categoria")
+  nome          String         @db.VarChar(50)
+  subcategorias Subcategoria[]
+
+  @@map("categoria")
+}
+
+model Subcategoria {
+  id          Int       @id @default(autoincrement()) @map("id_subcategoria")
+  categoriaId Int       @map("id_categoria")
+  nome        String    @db.VarChar(50)
+
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  produtos    Produto[]
+
+  @@map("subcategoria")
+}
+
+model Produto {
+  id             Int          @id @default(autoincrement()) @map("id_produto")
+  subcategoriaId Int          @map("id_subcategoria")
+  modelo         String       @db.VarChar(50)
+  fabricante     String?      @db.VarChar(50)
+  precoBase      Decimal      @map("preco_base") @db.Decimal(10, 2)
+  qtdEstoque     Int          @map("qtd_estoque")
+
+  subcategoria   Subcategoria @relation(fields: [subcategoriaId], references: [id])
+  numerosSerie   NumeroSerie[]
+  itensCompra    Contem[]
+
+  @@map("produto")
+}
+
+model Compra {
+  id             Int       @id @default(autoincrement()) @map("id_compra")
+  clienteId      Int       @map("id_cliente")
+  enderecoId     Int       @map("id_endereco")
+  dataHora       DateTime  @map("data_hora") @db.DateTime
+  desconto       Decimal?  @db.Decimal(10, 2)
+  formaPagamento String?   @map("forma_pagamento") @db.VarChar(50)
+  total          Decimal   @db.Decimal(10, 2)
+
+  cliente        Cliente   @relation(fields: [clienteId], references: [id])
+  endereco       Endereco  @relation(fields: [enderecoId], references: [id])
+  produtos       Contem[]
+
+  @@map("compra")
+}
+
+// Tabela intermediária para o relacionamento N:M entre Compra e Produto
+model Contem {
+  compraId      Int      @map("id_compra")
+  produtoId     Int      @map("id_produto")
+  quantidade    Int
+  precoUnitario Decimal  @map("preco_unitario") @db.Decimal(10, 2)
+
+  compra        Compra   @relation(fields: [compraId], references: [id])
+  produto       Produto  @relation(fields: [produtoId], references: [id])
+
+  @@id([compraId, produtoId]) // Chave primária composta
+  @@map("contem")
+}
+
+model NumeroSerie {
+  id          Int     @id @default(autoincrement()) @map("id_num_serie")
+  produtoId   Int     @map("id_produto")
+  numeroSerie String  @unique @map("numero_serie") @db.VarChar(50)
+
+  produto     Produto @relation(fields: [produtoId], references: [id])
+
+  @@map("num_serie")
+}
