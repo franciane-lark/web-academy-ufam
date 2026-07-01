@@ -1,0 +1,12 @@
+# 1. Escolhe uma imagem base leve que já vem com o Node.js
+FROM node:20-alpine
+
+# 2. Define a pasta de trabalho interna do container
+WORKDIR /app
+
+# 3. Copia o seu arquivo index.js para dentro dessa pasta /app
+COPY index.js .
+
+# 4. Define o comando inicial que o container vai executar
+CMD ["node", "index.js"]
+
