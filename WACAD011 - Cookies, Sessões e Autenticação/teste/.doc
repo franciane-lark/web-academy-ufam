@@ -1,0 +1,43 @@
+Como Testar no Insomnia
+
+Definindo o cookie:
+
+Crie uma requisição do tipo POST para http://localhost:3000/change-lang?lang=en-US.
+
+Clique em Send. O servidor irá devolver a mensagem de sucesso e anexar o cabeçalho Set-Cookie.
+
+Verificando os cookies:
+
+Vá na engrenagem ou botão Cookies no topo do Insomnia (exatamente na janela exibida no seu slide).
+
+Você verá o cookie lang listado para o domínio localhost com o valor en-US.
+
+Consumindo o comportamento:
+
+Faça uma requisição GET para http://localhost:3000/welcome.
+
+Como o Insomnia envia o cookie automaticamente, a API vai ler o valor en-US e responder com "Welcome to our system!".
+
+___________________________________________________________________________________________________________________________
+
+Como testar a proteção no Insomnia / Bruno
+
+Com o servidor rodando, faça o teste nesta exata sequência para ver o mecanismo funcionando:
+
+Sem fazer login:
+
+Tente dar um GET em /products. O resultado deve ser 401 Unauthorized com a mensagem "Acesso negado. Usuário não autenticado." disparada pelo seu isAuth.
+
+Logando como Usuário Comum:
+
+Faça um POST para /auth/login-user. (A API vai te devolver o JSON e salvar o cookie de sessão).
+
+Tente dar o GET em /products novamente. Agora vai funcionar e listar os produtos!
+
+Na sequência, tente dar um POST em /products para criar um item. O seu middleware isAdmin vai barrar e devolver 403 Forbidden ("Acesso proibido. Requer privilégios de Administrador.").
+
+Logando como Admin:
+
+Faça um POST para /auth/login-admin para trocar o perfil da sessão.
+
+Repita o POST em /products enviando os dados do produto. Agora a validação vai passar com sucesso e cadastrar o produto no banco de dados!
