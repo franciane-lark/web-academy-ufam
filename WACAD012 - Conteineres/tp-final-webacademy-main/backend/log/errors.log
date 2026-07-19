@@ -1,0 +1,27 @@
+[ERROR] 2026-06-18 21:45:35 GMT-04: GET / 404 9ms.
+[ERROR] 2026-06-18 21:45:35 GMT-04: GET /favicon.ico 404 0ms.
+[ERROR] 2026-06-18 21:51:03 GMT-04: GET / 404 1ms.
+[ERROR] 2026-06-18 21:59:20 GMT-04: 
+Invalid `this.conexao.livro.upsert()` invocation in
+/home/franlark/Estudos/web-academy-ufam/WACAD012 - Conteineres/tp-final-webacademy-main/backend/src/infraestrutura/repositorios/prisma/PrismaLivrosRepository.ts:134:34
+
+  131  * @see {@link LivrosRepository.salvar}
+  132  */
+  133 public async salvar(livro: Livro): Promise<void> {
+→ 134     await this.conexao.livro.upsert(
+Can't reach database server at `mysql`:`3306`
+
+Please make sure your database server is running at `mysql`:`3306`.
+[ERROR] 2026-06-18 21:59:20 GMT-04: livro.upsert
+[ERROR] 2026-06-18 21:59:20 GMT-04: Exceção lançada na rota POST /api/livros: 
+Invalid `this.conexao.livro.upsert()` invocation in
+/home/franlark/Estudos/web-academy-ufam/WACAD012 - Conteineres/tp-final-webacademy-main/backend/src/infraestrutura/repositorios/prisma/PrismaLivrosRepository.ts:134:34
+
+  131  * @see {@link LivrosRepository.salvar}
+  132  */
+  133 public async salvar(livro: Livro): Promise<void> {
+→ 134     await this.conexao.livro.upsert(
+Can't reach database server at `mysql`:`3306`
+
+Please make sure your database server is running at `mysql`:`3306`.
+[ERROR] 2026-06-18 21:59:20 GMT-04: POST /api/livros 500 28ms.

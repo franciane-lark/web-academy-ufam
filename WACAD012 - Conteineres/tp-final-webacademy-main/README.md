@@ -56,3 +56,38 @@ de acordo com a definição da especificação do trabalho.
  - No dia após a entrega, enviarei uma lista com todos os repositórios que recebi. Se o seu não estiver lá, entre em contato comigo.
  - Ao final da correção, será publicada a correção em um arquivo CORRECAO.md dentro do
 repositório, com as considerações feitas durante a correção do trabalho.
+
+# Sistema de Listagem de Livros - Web Academy
+
+Este repositório contém a arquitetura dockerizada completa da aplicação.
+
+## Pré-requisitos
+* Docker instalado
+* Docker Compose instalado
+
+## Como Executar a Aplicação
+
+1. Certifique-se de que os arquivos `.env` do backend estão configurados apontando o host do banco para `db-livros`.
+2. Na raiz do projeto, execute o comando abaixo para buildar e iniciar todos os serviços de forma integrada:
+
+```bash
+docker compose up --build
+
+O processo irá iniciar os seguintes serviços:
+
+Frontend: http://localhost:8000
+
+Backend: http://localhost:4444
+
+PHPMyAdmin: http://localhost:8080
+
+# Derruba os containers limpando o ambiente
+docker compose down
+
+# Sobbe novamente mantendo o estado dos volumes
+docker compose up -d
+
+---
+
+* [ ] **Atenção ao .gitignore:** Antes de commitar, certifique-se de que as pastas `node_modules`, arquivos `.lock` pesados ou builds locais (`dist`, `build`) não estão sendo enviados. O Dockerfile fará a instalação limpa do `npm install` dentro do container.
+* [ ] **Adicionar o Professor:** Vá em *Settings* > *Collaborators* > *Add people* no seu repositório no GitHub e convide o usuário `matiusX`.

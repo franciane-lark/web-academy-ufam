@@ -1,0 +1,62 @@
+services:
+  db-livros:
+    image: mysql:8.0
+    container_name: db-livros
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: web_academy_books
+    ports:
+      - "3306:3306"
+    volumes:
+      - dados_mysql:/var/lib/mysql
+      - ./banco-de-dados:/docker-entrypoint-initdb.d
+    networks:
+      - rede-books
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: admin-livros
+    environment:
+      PMA_HOST: db-livros
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    depends_on:
+      - db-livros
+    networks:
+      - rede-books
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: back-books
+    ports:
+      - "4444:4444"
+    volumes:
+      - logs_backend:/app/log
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - db-livros
+    networks:
+      - rede-books
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: front-books
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    networks:
+      - rede-books
+
+volumes:
+  dados_mysql:
+  logs_backend:
+
+networks:
+  rede-books:
+    driver: bridge
