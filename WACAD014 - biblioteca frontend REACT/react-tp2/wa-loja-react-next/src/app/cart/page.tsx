@@ -1,56 +1,74 @@
-import { Navbar } from '../components/navbar/navbar';
+'use client';
 
-export default function Cart() {
+import { useQuery } from '@tanstack/react-query';
+import { productsApi } from './services/api';
+
+interface Product {
+  id: string;
+  nome: string;
+  preco: string;
+  descricao: string;
+  fotos: { src: string; titulo: string }[];
+  vendido: string;
+}
+
+const fetchProducts = async (): Promise<Product[]> => {
+  const response = await productsApi.get<Product[]>('/produto');
+  return response.data;
+};
+
+export default function Home() {
+  const { data: products, isLoading, isError, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+  });
+
+  if (isLoading) {
+    return (
+      <main className="container my-5 text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Carregando...</span>
+        </div>
+      </main>
+    );
+  }
+
+  if (isError) {
+    return (
+      <main className="container my-5">
+        <div className="alert alert-danger" role="alert">
+          Erro ao carregar os produtos: {(error as Error).message}
+        </div>
+      </main>
+    );
+  }
+
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <Navbar />
-
-      <hr />
-
-      <section style={{ margin: '20px 0' }}>
-        <h3>Produtos selecionados</h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', marginTop: '10px' }}>
-          <thead>
-            <tr style={{ borderBottom: '2px solid #000' }}>
-              <th>Produto</th>
-              <th>Valor Unitário</th>
-              <th>Quantidade</th>
-              <th>Valor Total</th>
-              <th>Opções</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Monitor UltraWide 34</td>
-              <td>R$ 2200.00</td>
-              <td>1</td>
-              <td>R$ 2200.00</td>
-              <td><button>Remover</button></td>
-            </tr>
-            <tr>
-              <td>Teclado Mecânico RGB</td>
-              <td>R$ 450.00</td>
-              <td>2</td>
-              <td>R$ 900.00</td>
-              <td><button>Remover</button></td>
-            </tr>
-            <tr>
-              <td>Mouse Gamer Sem Fio</td>
-              <td>R$ 350.00</td>
-              <td>2</td>
-              <td>R$ 700.00</td>
-              <td><button>Remover</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-
-      <hr />
-      <section style={{ margin: '20px 0' }}>
-        <h3>Resumo do Carrinho</h3>
-        <p>Quantidade total: 5</p>
-        <p>Valor total: R$3800.00</p>
-      </section>
-    </div>
+    <main className="container my-4">
+      <h1 className="mb-4">Listagem de Produtos</h1>
+      <div className="row row-cols-1 row-cols-md-3 g-4">
+        {products?.map((product) => (
+          <div key={product.id} className="col">
+            <div className="card h-100 shadow-sm">
+              {product.fotos && product.fotos.length > 0 && (
+                <img
+                  src={product.fotos[0].src}
+                  className="card-img-top"
+                  alt={product.fotos[0].titulo || product.nome}
+                  style={{ height: '200px', objectFit: 'cover' }}
+                />
+              )}
+              <div className="card-body">
+                <h5 className="card-title">{product.nome}</h5>
+                <p className="card-text text-muted">{product.descricao}</p>
+                <p className="card-text fw-bold text-success">
+                  R$ {Number(product.preco).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
   );
 }
