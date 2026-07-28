@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css"; 
+import "react-toastify/dist/ReactToastify.css";
 
+import { ToastContainer } from "react-toastify";
 import { Navbar } from "./components/navbar/navbar";
 import { BootstrapClient } from "./components/BootstrapClient";
 import { ReactQueryClientProvider } from "./components/ReactQueryClient";
@@ -22,6 +24,7 @@ export default function RootLayout({
         <ReactQueryClientProvider>
           <Navbar />
           {children}
+          <ToastContainer autoClose={3000} position="bottom-right" />
           <BootstrapClient />
         </ReactQueryClientProvider>
       </body>
