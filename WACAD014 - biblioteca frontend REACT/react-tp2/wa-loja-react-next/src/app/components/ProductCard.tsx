@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { favoriteApi } from '../services/api';
@@ -10,7 +11,7 @@ export interface Product {
   preco: string;
   descricao: string;
   fotos: { src: string; titulo: string }[];
-  vendido: string;
+  usuario_id?: string;
 }
 
 interface ProductCardProps {
@@ -23,6 +24,7 @@ const addFavorite = async (product: Product) => {
 };
 
 export function ProductCard({ product }: ProductCardProps) {
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const favoriteMutation = useMutation({
@@ -36,6 +38,10 @@ export function ProductCard({ product }: ProductCardProps) {
     },
   });
 
+  const viewProductDetails = (productName: string) => {
+    router.push(`/product/${productName.toLowerCase()}`);
+  };
+
   return (
     <div className="card h-100 border-0 shadow-sm bg-light">
       {product.fotos && product.fotos.length > 0 && (
@@ -43,7 +49,8 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.fotos[0].src}
           className="card-img-top"
           alt={product.fotos[0].titulo || product.nome}
-          style={{ height: '240px', objectFit: 'cover' }}
+          style={{ height: '200px', objectFit: 'cover', cursor: 'pointer' }}
+          onClick={() => viewProductDetails(product.nome)}
         />
       )}
       <div className="card-body d-flex flex-column justify-content-between p-3">
@@ -57,12 +64,9 @@ export function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className="d-flex flex-column gap-2 mt-auto">
-  
           <button className="btn btn-dark w-100 btn-sm py-2 fw-medium">
             Adicionar no carrinho
           </button>
-
-        
           <button
             onClick={() => favoriteMutation.mutate(product)}
             disabled={favoriteMutation.isPending}

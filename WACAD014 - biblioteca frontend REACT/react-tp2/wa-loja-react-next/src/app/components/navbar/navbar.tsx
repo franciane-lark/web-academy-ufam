@@ -1,23 +1,26 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
 
 export function Navbar() {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  if (pathname === '/login' || pathname === '/register' || pathname === '/cadastro') {
+    return null;
+  }
+
+  const handleLogout = () => {
+    router.push('/login');
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light border-bottom">
       <div className="container">
         <Link className="navbar-brand fw-bold" href="/">
           Loja WA
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -37,6 +40,9 @@ export function Navbar() {
             </li>
           </ul>
         </div>
+        <button onClick={handleLogout} className="btn btn-dark btn-sm px-3">
+          Sair
+        </button>
       </div>
     </nav>
   );

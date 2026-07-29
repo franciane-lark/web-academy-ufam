@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { Navbar } from "./components/navbar/navbar";
 import { BootstrapClient } from "./components/BootstrapClient";
-import { ReactQueryClientProvider } from "./components/ReactQueryClient";
+import { ReactQueryClientProvider } from "./components/React.QueryClient";
 
 export const metadata: Metadata = {
   title: "Loja React Next",
