@@ -1,0 +1,336 @@
+ProductList.test.tsx
+---------------------
+
+
+import { render, screen } from "@testing-library/react";
+import ProductList from "./ProductList";
+import { useFavoritesContext } from "../../hooks/useFavoritesContext";
+
+// 1. Mock do Hook de Contexto
+jest.mock("../../hooks/useFavoritesContext", () => ({
+  useFavoritesContext: jest.fn(),
+}));
+
+// 2. Mock do componente filho (opcional, mas boa prática para teste unitário)
+jest.mock("../ProductCard/ProductCard", () => {
+  return function MockProductCard({ product }: { product: any }) {
+    return <div data-testid="product-card">{product.nome || product.title || "Produto"}</div>;
+  };
+});
+
+// Dados simulados (Mock Data)
+const mockProducts = [
+  { id: "1", nome: "Camiseta", preco: 50 },
+  { id: "2", nome: "Calça", preco: 120 },
+];
+
+describe("Componente ProductList", () => {
+  const mockSetFavorites = jest.fn();
+
+  beforeEach(() => {
+    // Configura o retorno do hook antes de cada teste
+    (useFavoritesContext as jest.Mock).mockReturnValue({
+      setFavorites: mockSetFavorites,
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("deve renderizar o título corretamente", () => {
+    render(<ProductList products={mockProducts} />);
+
+    const titleElement = screen.getByRole("heading", {
+      name: /produtos disponíveis:/i,
+    });
+    expect(titleElement).toBeInTheDocument();
+  });
+
+  test("deve renderizar a quantidade correta de cards de produtos", () => {
+    render(<ProductList products={mockProducts} />);
+
+    const productCards = screen.getAllByTestId("product-card");
+    expect(productCards).toHaveLength(mockProducts.length);
+  });
+
+  test("não deve renderizar nenhum card quando a lista de produtos estiver vazia", () => {
+    render(<ProductList products={[]} />);
+
+    const productCards = screen.queryAllByTestId("product-card");
+    expect(productCards).toHaveLength(0);
+  });
+});
+
+
+Test Report:
+
+npm test ProductList
+npm notice run wa-loja-tests@0.1.0 test
+npm notice run jest ProductList
+ PASS  src/app/components/ProductList/ProductList.test.tsx
+  Componente ProductList
+    ✓ deve renderizar o título corretamente (55 ms)
+    ✓ deve renderizar a quantidade correta de cards de produtos (3 ms)
+    ✓ não deve renderizar nenhum card quando a lista de produtos estiver vazia (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.52 s, estimated 1 s
+Ran all test suites matching /ProductList/i.
+
+
+
+-----------------------------------------------------------
+FavoritesList.test.tsx
+
+
+import { render, screen } from "@testing-library/react";
+import FavoritesList from "./FavoritesList";
+
+// 1. Imports dos hooks usando caminhos relativos
+import { useFavoritesContext } from "../../hooks/useFavoritesContext";
+import { useFavoriteProducts } from "../../hooks/useFavoriteProducts";
+import { useFavoritesTotalValue } from "../../hooks/useFavoritesTotalValue";
+
+// 2. Mocks dos Hooks
+jest.mock("../../hooks/useFavoritesContext", () => ({
+  useFavoritesContext: jest.fn(),
+}));
+
+jest.mock("../../hooks/useFavoriteProducts", () => ({
+  useFavoriteProducts: jest.fn(),
+}));
+
+jest.mock("../../hooks/useFavoritesTotalValue", () => ({
+  useFavoritesTotalValue: jest.fn(),
+}));
+
+// 3. Mock do componente filho (FavoriteItem)
+jest.mock("../FavoriteItem/FavoriteItem", () => {
+  return function MockFavoriteItem({ favoriteItem }: { favoriteItem: any }) {
+    return (
+      <tr data-testid="favorite-item">
+        <td>{favoriteItem.nome || "Produto Teste"}</td>
+      </tr>
+    );
+  };
+});
+
+describe("Componente FavoritesList", () => {
+  const mockSetFavorites = jest.fn();
+
+  beforeEach(() => {
+    // Configuração padrão do context
+    (useFavoritesContext as jest.Mock).mockReturnValue({
+      setFavorites: mockSetFavorites,
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("deve renderizar a mensagem de lista vazia quando não houver favoritos", () => {
+    // Configura os hooks para retornar lista vazia e total 0
+    (useFavoriteProducts as jest.Mock).mockReturnValue([]);
+    (useFavoritesTotalValue as jest.Mock).mockReturnValue("0,00");
+
+    render(<FavoritesList />);
+
+    // Verifica o título
+    expect(
+      screen.getByRole("heading", { name: /lista de favoritos:/i })
+    ).toBeInTheDocument();
+
+    // Verifica a mensagem de lista vazia
+    expect(
+      screen.getByText("Sua lista de favoritos está vazia.")
+    ).toBeInTheDocument();
+
+    // Verifica os valores do rodapé
+    expect(screen.getByText(/quantidade de produtos: 0/i)).toBeInTheDocument();
+    expect(screen.getByText(/valor total: r\$ 0,00/i)).toBeInTheDocument();
+
+    // Garante que a tabela NÃO foi renderizada
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
+
+  test("deve renderizar a tabela com os itens quando houver favoritos", () => {
+    const mockItems = [
+      { id: "1", nome: "Camiseta" },
+      { id: "2", nome: "Tênis" },
+    ];
+
+    // Configura os hooks para retornar itens simulados e total calculado
+    (useFavoriteProducts as jest.Mock).mockReturnValue(mockItems);
+    (useFavoritesTotalValue as jest.Mock).mockReturnValue("250,00");
+
+    render(<FavoritesList />);
+
+    // Verifica que a mensagem de lista vazia NÃO aparece
+    expect(
+      screen.queryByText("Sua lista de favoritos está vazia.")
+    ).not.toBeInTheDocument();
+
+    // Verifica se a tabela e os cabeçalhos existem
+    expect(screen.getByRole("table")).toBeInTheDocument();
+    expect(screen.getByText("Produto")).toBeInTheDocument();
+    expect(screen.getByText("Preço")).toBeInTheDocument();
+
+    // Verifica se renderizou os 2 itens (linha por linha)
+    const items = screen.getAllByTestId("favorite-item");
+    expect(items).toHaveLength(2);
+
+    // Verifica a contagem e o valor total no rodapé
+    expect(screen.getByText(/quantidade de produtos: 2/i)).toBeInTheDocument();
+    expect(screen.getByText(/valor total: r\$ 250,00/i)).toBeInTheDocument();
+  });
+});
+
+
+TestReport:
+
+npm test FavoritesList
+npm notice run wa-loja-tests@0.1.0 test
+npm notice run jest FavoritesList
+ PASS  src/app/components/FavoritesList/FavoritesList.test.tsx
+  Componente FavoritesList
+    ✓ deve renderizar a mensagem de lista vazia quando não houver favoritos (51 ms)
+    ✓ deve renderizar a tabela com os itens quando houver favoritos (13 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.521 s
+
+
+
+
+
+
+-------------------------------------------------
+
+FavoriteItem.test.tsx
+
+import { render, screen, fireEvent } from "@testing-library/react";
+import FavoriteItem from "./FavoriteItem";
+import { calculatePriceWithDiscount } from "../../helpers"; // Ajuste os '../' se necessário
+
+// 1. Mock do helper de cálculo
+jest.mock("../../helpers", () => ({
+  calculatePriceWithDiscount: jest.fn(),
+}));
+
+// Dados simulados do Produto
+const mockFavoriteItem = {
+  id: "prod-1",
+  nome: "Teclado Mecânico",
+  descricao: "Teclado switch azul",
+  preco: 200, // No componente é convertido com Number()
+  desconto: 10,
+  fotos: [
+    { src: "/teclado.jpg", titulo: "Foto do Teclado" }
+  ],
+};
+
+describe("Componente FavoriteItem", () => {
+  const mockSetFavorites = jest.fn();
+
+  beforeEach(() => {
+    // Definimos que o cálculo do desconto retornará 180 fixo para esse teste
+    (calculatePriceWithDiscount as jest.Mock).mockReturnValue(180);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  // Função auxiliar para envelopar o <FavoriteItem> em uma tabela válida
+  const renderComponent = () => {
+    return render(
+      <table>
+        <tbody>
+          <FavoriteItem
+            favoriteItem={mockFavoriteItem as any}
+            setFavorites={mockSetFavorites}
+          />
+        </tbody>
+      </table>
+    );
+  };
+
+  test("deve renderizar as informações e a imagem do produto corretamente", () => {
+    renderComponent();
+
+    // Verifica imagem pelo 'alt'
+    const image = screen.getByRole("img", { name: "Foto do Teclado" });
+    expect(image).toBeInTheDocument();
+    // O Next.js adiciona parâmetros na URL da imagem gerada, então checamos se inclui o src original
+    expect(image.getAttribute("src")).toContain(encodeURIComponent("/teclado.jpg"));
+
+    // Verifica textos
+    expect(screen.getByText("Teclado Mecânico")).toBeInTheDocument();
+    expect(screen.getByText("Teclado switch azul")).toBeInTheDocument();
+
+    // Verifica se o helper foi chamado com os valores corretos e renderizado
+    expect(calculatePriceWithDiscount).toHaveBeenCalledWith(200, 10);
+    expect(screen.getByText(/180\.00/i)).toBeInTheDocument();
+
+    // Verifica porcentagem
+    expect(screen.getByText("10%")).toBeInTheDocument();
+  });
+
+  test("deve chamar a função setFavorites passando um callback que remove o item", () => {
+    renderComponent();
+
+    // Clica no botão de remover
+    const btnRemover = screen.getByRole("button", { name: /remover/i });
+    fireEvent.click(btnRemover);
+
+    // Garante que o hook de estado foi acionado 1 vez
+    expect(mockSetFavorites).toHaveBeenCalledTimes(1);
+
+    // TESTE AVANÇADO: Extrai a função callback (favorites) => favorites.filter(...) passada para o state
+    const stateUpdaterCallback = mockSetFavorites.mock.calls[0][0];
+
+    // Simula uma lista de favoritos que já existia no estado
+    const estadoAnterior = [
+      { id: "prod-1", nome: "Teclado" },
+      { id: "prod-2", nome: "Mouse" }
+    ];
+
+    // Executa a função passando a lista simulada
+    const novoEstado = stateUpdaterCallback(estadoAnterior);
+
+    // O novo estado só deve conter o item que NÃO foi clicado
+    expect(novoEstado).toHaveLength(1);
+    expect(novoEstado[0].id).toBe("prod-2");
+  });
+});
+
+
+
+
+TestReport:
+
+npm test FavoriteItem
+npm notice run wa-loja-tests@0.1.0 test
+npm notice run jest FavoriteItem
+ PASS  src/app/components/FavoriteItem/FavoriteItem.test.tsx
+  Componente FavoriteItem
+    ✓ deve renderizar as informações e a imagem do produto corretamente (88 ms)
+    ✓ deve chamar a função setFavorites passando um callback que remove o item (15 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.575 s
+
+
+
+
+
+
+
